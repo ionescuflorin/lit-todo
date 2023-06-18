@@ -14,6 +14,7 @@ const VisibilityFilters = {
 
 export class TodoMvc extends LitElement {
   static get properties() {
+    // test
     return {
       todos: { type: Array },
       filter: { type: String },
@@ -33,22 +34,22 @@ export class TodoMvc extends LitElement {
   }
 
   clearCompleted() {
-    this.todos = this.todos.filter((todo) => !todo.complete);
+    this.todos = this.todos.filter(todo => !todo.complete);
   }
 
   applyFilter(todos) {
     switch (this.filter) {
       case VisibilityFilters.SHOW_ACTIVE:
-        return todos.filter((todo) => !todo.complete);
+        return todos.filter(todo => !todo.complete);
       case VisibilityFilters.SHOW_COMPLETED:
-        return todos.filter((todo) => todo.complete);
+        return todos.filter(todo => todo.complete);
       default:
         return todos;
     }
   }
 
   updateTodoStauts(updatedTodo, complete) {
-    this.todos = this.todos.map((todo) =>
+    this.todos = this.todos.map(todo =>
       updatedTodo === todo ? { ...updatedTodo, complete } : todo
     );
   }
@@ -104,7 +105,7 @@ export class TodoMvc extends LitElement {
           margin-top: calc(4 * var(--spacing));
         }
       </style>
-      
+
       <div class="input-layout" @keyup="${this.shortcutListener}">
         <vaadin-text-field
           placeholder="Task"
@@ -118,12 +119,11 @@ export class TodoMvc extends LitElement {
 
       <div class="todos-list">
         ${this.applyFilter(this.todos).map(
-          (todo) => html`
+          todo => html`
             <div class="todo-item">
               <vaadin-checkbox
                 ?checked="${todo.complete}"
-                @change="${(e) =>
-                  this.updateTodoStauts(todo, e.target.checked)}"
+                @change="${e => this.updateTodoStauts(todo, e.target.checked)}"
                 >${todo.task}</vaadin-checkbox
               >
             </div>
@@ -137,7 +137,7 @@ export class TodoMvc extends LitElement {
         @value-changed="${this.filterChanged}"
       >
         ${Object.values(VisibilityFilters).map(
-          (filter) => html` <vaadin-radio-button value="${filter}">
+          filter => html` <vaadin-radio-button value="${filter}">
             ${filter}
           </vaadin-radio-button>`
         )}
